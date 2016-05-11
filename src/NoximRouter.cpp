@@ -252,7 +252,8 @@ void NoximRouter::txProcess()
                             destination_coord = id2Coord(flit.dst_id);
                             temp_destination_coord = id2Coord(flit.temp_dest_id);
 
-                            int o ;
+                            int o ; // output port chosen by the routing function
+                            
                             v = flit.channel; // once a flit is assigned a VC, during the routing, it should remain on the same VC (VN)
                             
                             if (flit.dst_id == local_id){   // if we are destination node
@@ -299,11 +300,6 @@ void NoximRouter::txProcess()
                                 flit.temp_dest_id = flit.dst_id;
                             }
                             
-//                            if ( (route_data.src_id == route_data.dst_id) && (o == DIRECTION_LOCAL) )
-//                                cout << "Traffic generator has generated a packet is sent from a node to itself !!! \n";
-//                            else if ( (route_data.src_id != route_data.dst_id) && (o == DIRECTION_LOCAL) )
-//                                cout << "Traffic : " << route_data.src_id << " -> " << route_data.dst_id << " has reached its destination!\n";
-
 							if (reservation_table.isAvailable(o, v))
 							{
 								reservation_table.reserve(i, o, v);
